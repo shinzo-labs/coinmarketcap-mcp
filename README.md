@@ -1,5 +1,7 @@
 # CoinMarketCap MCP
 
+[![smithery badge](https://smithery.ai/badge/@shinzo-labs/coinmarketcap-mcp)](https://smithery.ai/server/@shinzo-labs/coinmarketcap-mcp)
+
 A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) implementation for the [CoinMarketCap](https://coinmarketcap.com/) API, providing a standardized interface for accessing cryptocurrency market data, exchange information, and other blockchain-related metrics.
 
 ## Features
@@ -56,6 +58,14 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
     }
   }
 }
+```
+
+### Smithery
+
+To install for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@shinzo-labs/coinmarketcap-mcp):
+
+```bash
+npx -y @smithery/cli install @shinzo-labs/coinmarketcap-mcp --client claude
 ```
 
 ## Supported Endpoints
