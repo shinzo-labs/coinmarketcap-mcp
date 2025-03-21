@@ -40,6 +40,16 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 
 ### Subscription Level: Basic (and above)
 
+#### DEX
+- `dexInfo`: Get metadata for one or more decentralised exchanges
+- `dexListingsLatest`: Get latest market data for all DEXes
+- `dexNetworksList`: Get list of all networks with unique IDs
+- `dexSpotPairsLatest`: Get latest market data for all active DEX spot pairs
+- `dexPairsQuotesLatest`: Get latest market quotes for spot pairs
+- `dexPairsOhlcvLatest`: Get latest OHLCV data for spot pairs
+- `dexPairsOhlcvHistorical`: Get historical OHLCV data for spot pairs
+- `dexPairsTradeLatest`: Get latest trades for spot pairs
+
 #### Cryptocurrency
 - `cryptoCurrencyMap`: Get mapping of all cryptocurrencies
 - `getCryptoMetadata`: Get metadata for one or more cryptocurrencies
@@ -74,6 +84,7 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 #### Cryptocurrency
 - `cryptoAirdrops`: Get list of all cryptocurrency airdrops
 - `cryptoAirdrop`: Get metadata about a specific airdrop
+- `cryptoQuotesHistoricalV3`: Get historical market quotes with advanced time-based intervals
 
 #### Content
 - `contentLatest`: Get latest cryptocurrency news and content
@@ -94,6 +105,7 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 - `cryptoOhlcvLatest`: Get latest OHLCV market data for any cryptocurrency
 - `cryptoOhlcvHistorical`: Get historical OHLCV market data for any cryptocurrency
 - `cryptoPricePerformanceStatsLatest`: Get price performance statistics for any cryptocurrency
+- `newCryptocurrencyListings`: Get list of most recently added cryptocurrencies
 
 #### Exchange
 - `exchangeMarketPairsLatest`: Get latest market pairs for any exchange
