@@ -1,11 +1,14 @@
 {
   "name": "@shinzolabs/coinmarketcap-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "A complete MCP for the CoinMarketCap API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
+  },
+  "bin": {
+    "coinmarketcap-mcp": "./index.js"
   },
   "keywords": [
     "crypto",
