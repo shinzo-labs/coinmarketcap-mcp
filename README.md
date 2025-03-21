@@ -11,14 +11,35 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) i
 
 ## Installation
 
-1. If you don't have an API key, sign up to receive a free `Basic` key [here](https://pro.coinmarketcap.com/signup/?plan=0).
+If you don't have an API key, first sign up to receive a free `Basic` key [here](https://pro.coinmarketcap.com/signup/?plan=0).
 
-2. Download the repo:
+### NPX (Recommended)
+
+Add the following to your `claude_desktop_config.json`:
+```javascript
+{
+  "mcpServers": {
+    "coinmarketcap": {
+      "command": "npx",
+      "args": [
+        "@shinzolabs/coinmarketcap-mcp"
+      ],
+      "env": {
+        "COINMARKETCAP_API_KEY": "your-key-here",
+        "SUBSCRIPTION_LEVEL": "Basic" // "Basic", "Hobbyist", "Startup", "Standard", "Professional", or "Enterprise"
+      }
+    }
+  }
+}
+
+### Manual Download
+
+1. Download the repo:
 ```bash
 git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 ```
 
-3. Add the following to your `claude_desktop_config.json`:
+2. Add the following to your `claude_desktop_config.json`:
 ```javascript
 {
   "mcpServers": {
