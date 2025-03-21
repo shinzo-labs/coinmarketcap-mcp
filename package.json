@@ -1,0 +1,21 @@
+{
+  "name": "coinmarketcap-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A complete MCP for the CoinMarketCap API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "crypto",
+    "mcp",
+    "coinmarketcap"
+  ],
+  "author": "Austin Born (austin@shinzolabs.com)",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.4"
+  }
+}
