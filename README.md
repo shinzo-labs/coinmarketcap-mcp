@@ -5,8 +5,9 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) i
 ## Features
 
 - Complete coverage of the CoinMarketCap API
-- Subscription-based tool registration
-- Type-safe parameter validation using [Zod](https://zod.dev/)
+- Fetch data on the latest crypto trends, market movements, and global market metrics
+- Access to detailed OHLCV data with Standard subscription or higher
+- Type-safe parameter validation with [Zod](https://zod.dev/)
 
 ## Installation
 
@@ -104,36 +105,6 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 #### Other
 - `fearAndGreedHistorical`: Get historical Fear & Greed Index data
 - `blockchainStatisticsLatest`: Get latest blockchain statistics
-
-## Response Format
-
-All responses follow the MCP content format:
-
-```json
-{
-  "content": [
-    {
-      "type": "text",
-      "text": "JSON stringified response data"
-    }
-  ]
-}
-```
-
-## Error Handling
-
-Errors are returned in a consistent format:
-
-```json
-{
-  "content": [
-    {
-      "type": "text",
-      "text": "{\"error\": \"Error message\", \"status\": 403}"
-    }
-  ]
-}
-```
 
 ## Contributing
 
