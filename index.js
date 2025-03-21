@@ -493,7 +493,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
     },
     async (params) => {
       return handleEndpoint(async () => {
-        const data = await makeApiRequest('/v1/index/quotes/historical', params)
+        const data = await makeApiRequest('/v3/index/cmc100-historical', params)
         return formatResponse(data)
       })
     }
@@ -505,7 +505,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
     {},
     async () => {
       return handleEndpoint(async () => {
-        const data = await makeApiRequest('/v1/index/quotes/latest')
+        const data = await makeApiRequest('/v3/index/cmc100-latest')
         return formatResponse(data)
       })
     }
@@ -517,7 +517,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
     {},
     async () => {
       return handleEndpoint(async () => {
-        const data = await makeApiRequest('/v1/fear-and-greed/latest')
+        const data = await makeApiRequest('/v3/fear-and-greed/latest')
         return formatResponse(data)
       })
     }
@@ -532,7 +532,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
     },
     async (params) => {
       return handleEndpoint(async () => {
-        const data = await makeApiRequest('/v1/fear-and-greed/historical', params)
+        const data = await makeApiRequest('/v3/fear-and-greed/historical', params)
         return formatResponse(data)
       })
     }
