@@ -40,6 +40,19 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 
 ### Subscription Level: Basic (and above)
 
+#### Cryptocurrency
+- `cryptoCurrencyMap`: Get mapping of all cryptocurrencies
+- `getCryptoMetadata`: Get metadata for one or more cryptocurrencies
+- `allCryptocurrencyListings`: Get latest market quote for 1-5000 cryptocurrencies
+- `cryptoQuotesLatest`: Get latest market quote for 1 or more cryptocurrencies
+- `cryptoCategories`: Get list of all cryptocurrency categories
+- `cryptoCategory`: Get metadata about a cryptocurrency category
+
+#### Exchange
+- `exchangeMap`: Get mapping of all exchanges
+- `exchangeInfo`: Get metadata for one or more exchanges
+- `exchangeAssets`: Get list of all assets available on an exchange
+
 #### DEX
 - `dexInfo`: Get metadata for one or more decentralised exchanges
 - `dexListingsLatest`: Get latest market data for all DEXes
@@ -50,25 +63,12 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 - `dexPairsOhlcvHistorical`: Get historical OHLCV data for spot pairs
 - `dexPairsTradeLatest`: Get latest trades for spot pairs
 
-#### Cryptocurrency
-- `cryptoCurrencyMap`: Get mapping of all cryptocurrencies
-- `getCryptoMetadata`: Get metadata for one or more cryptocurrencies
-- `allCryptocurrencyListings`: Get latest market quote for 1-5000 cryptocurrencies
-- `cryptoQuotesLatest`: Get latest market quote for 1 or more cryptocurrencies
-- `cryptoCategories`: Get list of all cryptocurrency categories
-- `cryptoCategory`: Get metadata about a cryptocurrency category
-- `cryptoTrendingLatest`: Get trending cryptocurrencies
-- `cryptoTrendingMostVisited`: Get most visited cryptocurrencies
-- `cryptoTrendingGainersLosers`: Get top gainers and losers
-
-#### Exchange
-- `exchangeMap`: Get mapping of all exchanges
-- `exchangeInfo`: Get metadata for one or more exchanges
-- `exchangeListingsLatest`: Get latest market quote for 1-100 exchanges
-- `exchangeQuotesLatest`: Get latest market quote for 1 or more exchanges
-
 #### Global Metrics
 - `globalMetricsLatest`: Get latest global cryptocurrency metrics
+
+#### Index
+- `cmc100IndexLatest`: Get latest CoinMarketCap 100 Index value and constituents
+- `cmc100IndexHistorical`: Get historical CoinMarketCap 100 Index values
 
 #### Tools
 - `priceConversion`: Convert an amount of one cryptocurrency or fiat currency into another
@@ -78,13 +78,43 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 - `fiatMap`: Get mapping of all fiat currencies
 - `keyInfo`: Get API key usage and status
 - `fearAndGreedLatest`: Get latest Fear & Greed Index
+- `fearAndGreedHistorical`: Get historical Fear & Greed Index values
 
 ### Subscription Level: Hobbyist (and above)
 
 #### Cryptocurrency
 - `cryptoAirdrops`: Get list of all cryptocurrency airdrops
 - `cryptoAirdrop`: Get metadata about a specific airdrop
+- `historicalCryptocurrencyListings`: Get historical market quotes for any cryptocurrency
+- `cryptoQuotesHistorical`: Get historical market quotes for any cryptocurrency
 - `cryptoQuotesHistoricalV3`: Get historical market quotes with advanced time-based intervals
+
+#### Exchange
+- `exchangeQuotesHistorical`: Get historical quotes for any exchange
+
+#### Global Metrics
+- `globalMetricsHistorical`: Get historical global cryptocurrency metrics
+
+### Subscription Level: Startup (and above)
+
+#### Cryptocurrency
+- `newCryptocurrencyListings`: Get list of most recently added cryptocurrencies
+- `cryptoTrendingGainersLosers`: Get biggest gainers and losers in a given time period
+- `cryptoTrendingLatest`: Get top cryptocurrencies by search volume
+- `cryptoTrendingMostVisited`: Get most visited cryptocurrencies
+- `cryptoOhlcvLatest`: Get latest OHLCV market data for any cryptocurrency
+- `cryptoOhlcvHistorical`: Get historical OHLCV market data for any cryptocurrency
+- `cryptoPricePerformanceStatsLatest`: Get price performance statistics for any cryptocurrency
+
+### Subscription Level: Standard (and above)
+
+#### Cryptocurrency
+- `cryptoMarketPairsLatest`: Get latest market pairs for any cryptocurrency
+
+#### Exchange
+- `exchangeListingsLatest`: Get latest market data for all exchanges
+- `exchangeMarketPairsLatest`: Get latest market pairs for any exchange
+- `exchangeQuotesLatest`: Get latest market quotes for one or more exchanges
 
 #### Content
 - `contentLatest`: Get latest cryptocurrency news and content
@@ -96,27 +126,10 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 - `communityTrendingTopic`: Get trending topics in the cryptocurrency community
 - `communityTrendingToken`: Get trending tokens in the cryptocurrency community
 
-### Subscription Level: Standard (and above)
+### Subscription Level: Enterprise (and above)
 
-#### Cryptocurrency
-- `historicalCryptocurrencyListings`: Get historical market quotes for any cryptocurrency
-- `cryptoQuotesHistorical`: Get historical market quotes for any cryptocurrency
-- `cryptoMarketPairsLatest`: Get latest market pairs for any cryptocurrency
-- `cryptoOhlcvLatest`: Get latest OHLCV market data for any cryptocurrency
-- `cryptoOhlcvHistorical`: Get historical OHLCV market data for any cryptocurrency
-- `cryptoPricePerformanceStatsLatest`: Get price performance statistics for any cryptocurrency
-- `newCryptocurrencyListings`: Get list of most recently added cryptocurrencies
-
-#### Exchange
-- `exchangeMarketPairsLatest`: Get latest market pairs for any exchange
-- `exchangeAssets`: Get list of all assets (currencies, commodities, and indexes) available on an exchange
-
-#### Global Metrics
-- `globalMetricsHistorical`: Get historical global cryptocurrency metrics
-
-#### Other
-- `fearAndGreedHistorical`: Get historical Fear & Greed Index data
-- `blockchainStatisticsLatest`: Get latest blockchain statistics
+#### Blockchain
+- `blockchainStatisticsLatest`: Get latest statistics for one or more blockchains
 
 ## Contributing
 
