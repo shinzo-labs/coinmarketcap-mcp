@@ -103,6 +103,7 @@ async function handleEndpoint(apiCall) {
 if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
   // /cryptocurrency/map
   server.tool("cryptoCurrencyMap",
+    "Returns a mapping of all cryptocurrencies to unique CoinMarketCap IDs.",
     {
       listing_status: z.string().optional(),
       start: z.number().optional(),
@@ -127,6 +128,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/info
   server.tool("getCryptoMetadata",
+    "Returns all static metadata for one or more cryptocurrencies including logo, description, and website URLs.",
     {
       symbol: z.string().optional(),
       id: z.string().optional(),
@@ -152,6 +154,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/listings/latest
   server.tool("allCryptocurrencyListings",
+    "Returns a paginated list of all active cryptocurrencies with latest market data.",
     {
       start: z.number().optional(),
       limit: z.number().min(1).max(5000).optional(),
@@ -183,6 +186,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/quotes/latest
   server.tool("cryptoQuotesLatest",
+    "Returns the latest market quote for one or more cryptocurrencies.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -202,6 +206,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/categories
   server.tool("cryptoCategories",
+    "Returns information about all coin categories available on CoinMarketCap.",
     {
       start: z.number().optional(),
       limit: z.number().optional(),
@@ -219,6 +224,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/category
   server.tool("cryptoCategory",
+    "Returns information about a single coin category on CoinMarketCap.",
     {
       id: z.string(),
       start: z.number().optional(),
@@ -236,6 +242,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/trending/latest
   server.tool("cryptoTrendingLatest",
+    "Returns the top cryptocurrencies by search volume in a given time period.",
     {
       time_period: z.string().optional()
     },
@@ -249,6 +256,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/trending/most-visited
   server.tool("cryptoTrendingMostVisited",
+    "Returns the most visited cryptocurrencies on CoinMarketCap in a given time period.",
     {
       time_period: z.string().optional()
     },
@@ -262,6 +270,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /cryptocurrency/trending/gainers-losers
   server.tool("cryptoTrendingGainersLosers",
+    "Returns the biggest gainers and losers in a given time period.",
     {
       time_period: z.string().optional()
     },
@@ -275,6 +284,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /exchange/map
   server.tool("exchangeMap",
+    "Returns a mapping of all exchanges to unique CoinMarketCap IDs.",
     {
       listing_status: z.string().optional(),
       slug: z.string().optional(),
@@ -292,6 +302,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /exchange/info
   server.tool("exchangeInfo",
+    "Returns metadata for one or more exchanges.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -307,6 +318,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /exchange/listings/latest
   server.tool("exchangeListingsLatest",
+    "Returns a paginated list of all exchanges with latest market data.",
     {
       start: z.number().optional(),
       limit: z.number().optional(),
@@ -326,6 +338,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /exchange/quotes/latest
   server.tool("exchangeQuotesLatest",
+    "Returns the latest market quotes for one or more exchanges.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -343,6 +356,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /global-metrics/quotes/latest
   server.tool("globalMetricsLatest",
+    "Returns the latest global cryptocurrency market metrics.",
     {
       convert: z.string().optional(),
       convert_id: z.string().optional()
@@ -357,6 +371,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /tools/price-conversion
   server.tool("priceConversion",
+    "Convert an amount of one cryptocurrency or fiat currency into one or more different currencies.",
     {
       amount: z.number(),
       id: z.string().optional(),
@@ -375,6 +390,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /tools/postman
   server.tool("getPostmanCollection",
+    "Returns a Postman collection for the CoinMarketCap API.",
     {},
     async () => {
       return handleEndpoint(async () => {
@@ -386,6 +402,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /fiat/map
   server.tool("fiatMap",
+    "Returns a mapping of all supported fiat currencies to unique CoinMarketCap IDs.",
     {
       start: z.number().optional(),
       limit: z.number().optional(),
@@ -402,6 +419,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /key/info
   server.tool("keyInfo",
+    "Returns API key details and usage stats.",
     {},
     async () => {
       return handleEndpoint(async () => {
@@ -413,6 +431,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 
   // /fear-and-greed/latest
   server.tool("fearAndGreedLatest",
+    "Returns the latest CMC Crypto Fear and Greed Index value.",
     {},
     async () => {
       return handleEndpoint(async () => {
@@ -429,6 +448,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
 if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
   // /cryptocurrency/airdrops
   server.tool("cryptoAirdrops",
+    "Returns a list of past, present, or future airdrops on CoinMarketCap.",
     {
       start: z.number().optional(),
       limit: z.number().optional(),
@@ -447,6 +467,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /cryptocurrency/airdrop
   server.tool("cryptoAirdrop",
+    "Returns information about a single airdrop on CoinMarketCap.",
     {
       id: z.string()
     },
@@ -460,6 +481,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /content/latest
   server.tool("contentLatest",
+    "Returns latest cryptocurrency news and Alexandria articles.",
     {
       start: z.number().optional(),
       limit: z.number().optional(),
@@ -478,6 +500,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /content/posts/top
   server.tool("contentPostsTop",
+    "Returns top cryptocurrency posts.",
     {
       start: z.number().optional(),
       limit: z.number().optional()
@@ -492,6 +515,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /content/posts/latest
   server.tool("contentPostsLatest",
+    "Returns latest cryptocurrency posts.",
     {
       start: z.number().optional(),
       limit: z.number().optional()
@@ -506,6 +530,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /content/posts/comments
   server.tool("contentPostsComments",
+    "Returns comments for a specific post.",
     {
       id: z.string(),
       start: z.number().optional(),
@@ -521,6 +546,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /community/trending/topic
   server.tool("communityTrendingTopic",
+    "Returns community trending topics.",
     {
       start: z.number().optional(),
       limit: z.number().optional()
@@ -535,6 +561,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 
   // /community/trending/token
   server.tool("communityTrendingToken",
+    "Returns community trending tokens.",
     {
       start: z.number().optional(),
       limit: z.number().optional()
@@ -554,6 +581,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
 if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
   // /cryptocurrency/listings/historical
   server.tool("historicalCryptocurrencyListings",
+    "Returns a ranked and sorted list of all cryptocurrencies for a historical point in time.",
     {
       timestamp: z.string().or(z.number()).optional(),
       start: z.number().optional(),
@@ -575,6 +603,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /cryptocurrency/quotes/historical
   server.tool("cryptoQuotesHistorical",
+    "Returns an interval of historical market quotes for any cryptocurrency.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -598,6 +627,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /cryptocurrency/market-pairs/latest
   server.tool("cryptoMarketPairsLatest",
+    "Returns all market pairs for the specified cryptocurrency with associated stats.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -622,6 +652,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /cryptocurrency/ohlcv/latest
   server.tool("cryptoOhlcvLatest",
+    "Returns the latest OHLCV (Open, High, Low, Close, Volume) market values for one or more cryptocurrencies.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -640,6 +671,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /cryptocurrency/ohlcv/historical
   server.tool("cryptoOhlcvHistorical",
+    "Returns historical OHLCV market values for one or more cryptocurrencies.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -663,6 +695,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /cryptocurrency/price-performance-stats/latest
   server.tool("cryptoPricePerformanceStatsLatest",
+    "Returns price performance statistics for one or more cryptocurrencies including ROI and ATH stats.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -681,6 +714,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /exchange/market-pairs/latest
   server.tool("exchangeMarketPairsLatest",
+    "Returns all market pairs for the specified exchange with associated stats.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
@@ -700,6 +734,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /exchange/assets
   server.tool("exchangeAssets",
+    "Returns the assets/token holdings of an exchange.",
     {
       id: z.string().optional(),
       slug: z.string().optional()
@@ -714,6 +749,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /global-metrics/quotes/historical
   server.tool("globalMetricsHistorical",
+    "Returns historical global cryptocurrency market metrics.",
     {
       time_start: z.string().optional(),
       time_end: z.string().optional(),
@@ -733,6 +769,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /fear-and-greed/historical
   server.tool("fearAndGreedHistorical",
+    "Returns historical CMC Crypto Fear and Greed Index values.",
     {
       start: z.number().min(1).optional(),
       limit: z.number().min(1).max(500).optional()
@@ -747,6 +784,7 @@ if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
 
   // /blockchain/statistics/latest
   server.tool("blockchainStatisticsLatest",
+    "Returns the latest statistics for one or more blockchains.",
     {
       id: z.string().optional(),
       slug: z.string().optional(),
