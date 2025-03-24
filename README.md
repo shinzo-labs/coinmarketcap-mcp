@@ -42,7 +42,12 @@ Add the following to your `claude_desktop_config.json`:
 git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 ```
 
-2. Add the following to your `claude_desktop_config.json`:
+2. Install packages (inside cloned repo):
+```bash
+pnpm i
+```
+
+3. Add the following to your `claude_desktop_config.json`:
 ```javascript
 {
   "mcpServers": {
