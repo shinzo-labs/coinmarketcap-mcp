@@ -14,11 +14,13 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) i
 
 ## Installation
 
+⚠️ <strong>NOTE:</strong> Due to the large number of endpoints available on this server, it is recommended that you install and setup [Heimdall](https://github.com/shinzo-labs/heimdall) to limit the number of endpoints exposed to your client applications.
+
 If you don't have an API key, first sign up to receive a free `Basic` key [here](https://pro.coinmarketcap.com/signup/?plan=0).
 
 ### NPX (Recommended)
 
-Add the following to your `claude_desktop_config.json`:
+Add the following to your MCP client `config.json` (`~/.heimdall/config.json` if using Heimdall):
 ```javascript
 {
   "mcpServers": {
@@ -48,7 +50,7 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 pnpm i
 ```
 
-3. Add the following to your `claude_desktop_config.json`:
+3. Add the following to your MCP client `config.json` (`~/.heimdall/config.json` if using Heimdall):
 ```javascript
 {
   "mcpServers": {
