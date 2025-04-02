@@ -6,7 +6,7 @@ import { z } from "zod"
 
 const server = new McpServer({
   name: "CoinMarketCap-MCP",
-  version: "1.2.3",
+  version: "1.2.4",
   description: "A complete MCP for the CoinMarketCap API"
 })
 
