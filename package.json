@@ -1,6 +1,6 @@
 {
   "name": "@shinzolabs/coinmarketcap-mcp",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A complete MCP for the CoinMarketCap API",
   "type": "module",
   "main": "index.js",
