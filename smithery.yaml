@@ -5,16 +5,17 @@ startCommand:
   configSchema:
     # JSON Schema defining the configuration options for the MCP.
     type: object
+    description: COINMARKETCAP_API_KEY is required, and SUBSCRIPTION_LEVEL will default to 'Basic' if left undefined.
     required:
-      - coinmarketcapApiKey
+      - COINMARKETCAP_API_KEY
     properties:
-      coinmarketcapApiKey:
+      COINMARKETCAP_API_KEY:
         type: string
         description: CoinMarketCap API key
-      subscriptionLevel:
+      SUBSCRIPTION_LEVEL:
         type: string
         default: Basic
-        description: "Subscription level: Basic, Hobbyist, Startup, Standard,
+        description: "One of: Basic, Hobbyist, Startup, Standard,
           Professional, or Enterprise"
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
@@ -23,10 +24,10 @@ startCommand:
       command: 'node',
       args: ['index.js'],
       env: {
-        COINMARKETCAP_API_KEY: config.coinmarketcapApiKey,
-        SUBSCRIPTION_LEVEL: config.subscriptionLevel
+        COINMARKETCAP_API_KEY: config.COINMARKETCAP_API_KEY,
+        SUBSCRIPTION_LEVEL: config.SUBSCRIPTION_LEVEL
       }
     })
   exampleConfig:
-    coinmarketcapApiKey: test-key-123
-    subscriptionLevel: Basic
+    COINMARKETCAP_API_KEY: test-key-123
+    SUBSCRIPTION_LEVEL: Basic
