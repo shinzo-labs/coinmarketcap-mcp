@@ -12,15 +12,31 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) i
 - Access to detailed OHLCV data with Standard subscription or higher
 - Type-safe parameter validation with [Zod](https://zod.dev/)
 
-## Installation
-
-⚠️ <strong>NOTE:</strong> Due to the large number of endpoints available on this server, it is recommended that you install and setup [Heimdall](https://github.com/shinzo-labs/heimdall) to limit the number of endpoints exposed to your client applications.
+## Prerequisites
 
 If you don't have an API key, first sign up to receive a free `Basic` key [here](https://pro.coinmarketcap.com/signup/?plan=0).
 
-### NPX (Recommended)
+## Client Configuration
 
-Add the following to your MCP client `config.json` (`~/.heimdall/config.json` if using Heimdall):
+There are several options to configure your MCP client with the server. For hosted/remote server setup, use Smithery's CLI with a [Smithery API Key](https://smithery.ai/docs/registry#registry-api). For local installation, use `npx` or build from source. Each of these options is explained below.
+
+### Smithery Remote Server (Recommended)
+
+To add a remote server to your MCP client `config.json`, run the following command from [Smithery CLI](https://github.com/smithery-ai/cli?tab=readme-ov-file#smithery-cli--):
+
+```bash
+npx -y @smithery/cli install @shinzo-labs/coinmarketcap-mcp
+```
+
+Enter your `COINMARKETCAP_API_KEY` and `SUBSCRIPTION_LEVEL` (see options below) when prompted.
+
+### Smithery SDK
+
+If you are developing your own agent application, you can use the boilerplate code [here](https://smithery.ai/server/@shinzo-labs/coinmarketcap-mcp/api).
+
+### NPX Local Install
+
+To install the server locally with `npx`, add the following to your MCP client `config.json`:
 ```javascript
 {
   "mcpServers": {
@@ -31,14 +47,14 @@ Add the following to your MCP client `config.json` (`~/.heimdall/config.json` if
       ],
       "env": {
         "COINMARKETCAP_API_KEY": "your-key-here",
-        "SUBSCRIPTION_LEVEL": "Basic" // "Basic", "Hobbyist", "Startup", "Standard", "Professional", or "Enterprise"
+        "SUBSCRIPTION_LEVEL": "Basic" // See options below
       }
     }
   }
 }
 ```
 
-### Manual Download
+### Build from Source
 
 1. Download the repo:
 ```bash
@@ -50,7 +66,7 @@ git clone https://github.com/shinzo-labs/coinmarketcap-mcp.git
 pnpm i
 ```
 
-3. Add the following to your MCP client `config.json` (`~/.heimdall/config.json` if using Heimdall):
+3. Add the following to your MCP client `config.json`:
 ```javascript
 {
   "mcpServers": {
@@ -61,22 +77,21 @@ pnpm i
       ],
       "env": {
         "COINMARKETCAP_API_KEY": "your-key-here",
-        "SUBSCRIPTION_LEVEL": "Basic" // "Basic", "Hobbyist", "Startup", "Standard", "Professional", or "Enterprise"
+        "SUBSCRIPTION_LEVEL": "Basic" // See options below
       }
     }
   }
 }
 ```
 
-### Smithery
+## Config Variables
 
-To install for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@shinzo-labs/coinmarketcap-mcp):
+| Variable                | Description                                                                 | Required? | Defaults To |
+|-------------------------|-----------------------------------------------------------------------------|-----------|             |
+| `COINMARKETCAP_API_KEY` | API Key from CoinMarketCap.com                                              | Yes       |             |
+| `SUBSCRIPTION_LEVEL`    | `Basic`, `Hobbyist`, `Startup`, `Standard`, `Professional`, or `Enterprise` | No        | `Basic`     |
 
-```bash
-npx -y @smithery/cli install @shinzo-labs/coinmarketcap-mcp --client claude
-```
-
-## Supported Endpoints
+## Supported Tools
 
 ### Subscription Level: Basic (and above)
 
@@ -173,4 +188,4 @@ npx -y @smithery/cli install @shinzo-labs/coinmarketcap-mcp --client claude
 
 ## Contributing
 
-Contributions are welcomed and encouraged. Contact austin@shinzolabs.com with any questions, comments or concerns.
+Contributions are welcomed and encouraged! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on issues, contributions, and contact information.
