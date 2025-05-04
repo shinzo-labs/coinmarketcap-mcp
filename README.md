@@ -87,7 +87,7 @@ pnpm i
 ## Config Variables
 
 | Variable                | Description                                                                 | Required? | Defaults To |
-|-------------------------|-----------------------------------------------------------------------------|-----------|             |
+|-------------------------|-----------------------------------------------------------------------------|-----------|-------------|
 | `COINMARKETCAP_API_KEY` | API Key from CoinMarketCap.com                                              | Yes       |             |
 | `SUBSCRIPTION_LEVEL`    | `Basic`, `Hobbyist`, `Startup`, `Standard`, `Professional`, or `Enterprise` | No        | `Basic`     |
 
