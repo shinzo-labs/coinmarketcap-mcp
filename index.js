@@ -1153,6 +1153,4 @@ app.delete('/mcp', async (req, res) => {
 
 // Start the server
 const STREAMABLE_HTTP_PORT = process.env.STREAMABLE_HTTP_PORT || 3000
-app.listen(STREAMABLE_HTTP_PORT, () => {
-  console.log(`MCP Stateless Streamable HTTP Server listening on port ${STREAMABLE_HTTP_PORT}`)
-})
+app.listen(STREAMABLE_HTTP_PORT)
