@@ -1,22 +1,21 @@
 # Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
 
 startCommand:
-  type: stdio
+  type: http
   configSchema:
     # JSON Schema defining the configuration options for the MCP.
     type: object
-    description: COINMARKETCAP_API_KEY is required, and SUBSCRIPTION_LEVEL will default to 'Basic' if left undefined.
     required:
       - COINMARKETCAP_API_KEY
     properties:
       COINMARKETCAP_API_KEY:
         type: string
-        description: CoinMarketCap API key
+        description: "COINMARKETCAP_API_KEY - Your API key"
       SUBSCRIPTION_LEVEL:
         type: string
         default: Basic
-        description: "One of: Basic, Hobbyist, Startup, Standard,
-          Professional, or Enterprise"
+        description: "SUBSCRIPTION_LEVEL - One of: Basic, Hobbyist, Startup, Standard,
+          Professional, or Enterprise (defaults to Basic)"
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
