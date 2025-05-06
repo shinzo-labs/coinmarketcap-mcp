@@ -2,8 +2,7 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js"
-import express from "express"
+import { createStatelessServer } from "@smithery/sdk/server/stateless.js"
 import { z } from "zod"
 
 // Subscription plan levels in order of increasing access
@@ -37,9 +36,9 @@ function formatResponse(data) {
 }
 
 // Enhanced API request wrapper with error handling
-async function makeApiRequestWithErrorHandling(endpoint, params = {}) {
+async function makeApiRequestWithErrorHandling(apiKey, endpoint, params = {}) {
   try {
-    const data = await makeApiRequest(endpoint, params)
+    const data = await makeApiRequest(apiKey, endpoint, params)
     return formatResponse(data)
   } catch (error) {
     return formatErrorResponse(`Error fetching data from CoinMarketCap: ${error.message}`, 500)
@@ -47,13 +46,7 @@ async function makeApiRequestWithErrorHandling(endpoint, params = {}) {
 }
 
 // Helper function for making API requests to CoinMarketCap
-async function makeApiRequest(endpoint, params = {}) {
-  const apiKey = process.env.COINMARKETCAP_API_KEY
-  if (!apiKey) {
-    throw new Error("COINMARKETCAP_API_KEY environment variable is not set")
-  }
-
-  // Build query parameters
+async function makeApiRequest(apiKey, endpoint, params = {}) {
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined) {
@@ -79,8 +72,8 @@ async function makeApiRequest(endpoint, params = {}) {
 }
 
 // Helper function to check subscription level at runtime
-function checkSubscriptionLevel(requiredLevel) {
-  const currentLevel = SUBSCRIPTION_LEVELS[process.env.SUBSCRIPTION_LEVEL || 'Basic']
+function checkSubscriptionLevel(subscriptionLevel, requiredLevel) {
+  const currentLevel = SUBSCRIPTION_LEVELS[subscriptionLevel]
   return currentLevel >= requiredLevel
 }
 
@@ -93,17 +86,26 @@ async function handleEndpoint(apiCall) {
   }
 }
 
-const createServer = () => {
+function getConfig(config) {
+  return {
+    apiKey: config?.COINMARKETCAP_API_KEY || process.env.COINMARKETCAP_API_KEY,
+    subscriptionLevel: config?.SUBSCRIPTION_LEVEL || process.env.SUBSCRIPTION_LEVEL || 'Basic'
+  }
+}
+
+function createServer({ config }) {
   const server = new McpServer({
     name: "CoinMarketCap-MCP",
     version: "1.2.4",
     description: "A complete MCP for the CoinMarketCap API"
   })
 
+  const { apiKey, subscriptionLevel } = getConfig(config)
+
   /*
   * BASIC SUBSCRIPTION ENDPOINTS
   */
-  if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Basic)) {
+  if (checkSubscriptionLevel(subscriptionLevel, SUBSCRIPTION_LEVELS.Basic)) {
     // /cryptocurrency/categories
     server.tool("cryptoCategories",
       "Returns information about all coin categories available on CoinMarketCap.",
@@ -116,7 +118,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/categories', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/categories', params)
           return formatResponse(data)
         })
       }
@@ -134,7 +136,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/category', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/category', params)
           return formatResponse(data)
         })
       }
@@ -153,7 +155,7 @@ const createServer = () => {
       },
       async ({ listing_status = 'active', start = 1, limit = 100, sort = 'id', symbol, aux }) => {
         return handleEndpoint(async () => {
-          return await makeApiRequestWithErrorHandling('/v1/cryptocurrency/map', {
+          return await makeApiRequestWithErrorHandling(apiKey, '/v1/cryptocurrency/map', {
             listing_status,
             start,
             limit,
@@ -178,7 +180,7 @@ const createServer = () => {
       },
       async ({ symbol, id, slug, address, aux, skip_invalid }) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/info', {
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/info', {
             symbol,
             id,
             slug,
@@ -217,7 +219,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/listings/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/listings/latest', params)
           return formatResponse(data)
         })
       }
@@ -237,7 +239,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/quotes/latest', params)
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/quotes/latest', params)
           return formatResponse(data)
         })
       }
@@ -252,7 +254,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/listings/info', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/listings/info', params)
           return formatResponse(data)
         })
       }
@@ -272,7 +274,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/listings/quotes', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/listings/quotes', params)
           return formatResponse(data)
         })
       }
@@ -290,7 +292,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/networks/list', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/networks/list', params)
           return formatResponse(data)
         })
       }
@@ -330,7 +332,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/spot-pairs/latest', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/spot-pairs/latest', params)
           return formatResponse(data)
         })
       }
@@ -350,7 +352,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/pairs/quotes/latest', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/pairs/quotes/latest', params)
           return formatResponse(data)
         })
       }
@@ -370,7 +372,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/pairs/ohlcv/latest', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/pairs/ohlcv/latest', params)
           return formatResponse(data)
         })
       }
@@ -395,7 +397,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/pairs/ohlcv/historical', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/pairs/ohlcv/historical', params)
           return formatResponse(data)
         })
       }
@@ -415,7 +417,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v4/dex/pairs/trade/latest', params)
+          const data = await makeApiRequest(apiKey, '/v4/dex/pairs/trade/latest', params)
           return formatResponse(data)
         })
       }
@@ -430,7 +432,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/assets', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/assets', params)
           return formatResponse(data)
         })
       }
@@ -446,7 +448,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/info', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/info', params)
           return formatResponse(data)
         })
       }
@@ -464,7 +466,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/map', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/map', params)
           return formatResponse(data)
         })
       }
@@ -479,7 +481,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/global-metrics/quotes/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/global-metrics/quotes/latest', params)
           return formatResponse(data)
         })
       }
@@ -496,7 +498,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v3/index/cmc100-historical', params)
+          const data = await makeApiRequest(apiKey, '/v3/index/cmc100-historical', params)
           return formatResponse(data)
         })
       }
@@ -508,7 +510,7 @@ const createServer = () => {
       {},
       async () => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v3/index/cmc100-latest')
+          const data = await makeApiRequest(apiKey, '/v3/index/cmc100-latest')
           return formatResponse(data)
         })
       }
@@ -520,7 +522,7 @@ const createServer = () => {
       {},
       async () => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v3/fear-and-greed/latest')
+          const data = await makeApiRequest(apiKey, '/v3/fear-and-greed/latest')
           return formatResponse(data)
         })
       }
@@ -535,7 +537,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v3/fear-and-greed/historical', params)
+          const data = await makeApiRequest(apiKey, '/v3/fear-and-greed/historical', params)
           return formatResponse(data)
         })
       }
@@ -552,7 +554,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/fiat/map', params)
+          const data = await makeApiRequest(apiKey, '/v1/fiat/map', params)
           return formatResponse(data)
         })
       }
@@ -564,7 +566,7 @@ const createServer = () => {
       {},
       async () => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/tools/postman')
+          const data = await makeApiRequest(apiKey, '/v1/tools/postman')
           return formatResponse(data)
         })
       }
@@ -583,7 +585,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/tools/price-conversion', params)
+          const data = await makeApiRequest(apiKey, '/v2/tools/price-conversion', params)
           return formatResponse(data)
         })
       }
@@ -595,7 +597,7 @@ const createServer = () => {
       {},
       async () => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/key/info')
+          const data = await makeApiRequest(apiKey, '/v1/key/info')
           return formatResponse(data)
         })
       }
@@ -605,7 +607,7 @@ const createServer = () => {
   /*
   * HOBBYIST SUBSCRIPTION ENDPOINTS
   */
-  if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Hobbyist)) {
+  if (checkSubscriptionLevel(subscriptionLevel, SUBSCRIPTION_LEVELS.Hobbyist)) {
     // /cryptocurrency/airdrop
     server.tool("cryptoAirdrop",
       "Returns information about a single airdrop on CoinMarketCap.",
@@ -614,7 +616,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/airdrop', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/airdrop', params)
           return formatResponse(data)
         })
       }
@@ -633,7 +635,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/airdrops', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/airdrops', params)
           return formatResponse(data)
         })
       }
@@ -655,7 +657,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/listings/historical', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/listings/historical', params)
           return formatResponse(data)
         })
       }
@@ -679,7 +681,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/quotes/historical', params)
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/quotes/historical', params)
           return formatResponse(data)
         })
       }
@@ -707,7 +709,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v3/cryptocurrency/quotes/historical', params)
+          const data = await makeApiRequest(apiKey, '/v3/cryptocurrency/quotes/historical', params)
           return formatResponse(data)
         })
       }
@@ -733,7 +735,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/quotes/historical', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/quotes/historical', params)
           return formatResponse(data)
         })
       }
@@ -753,7 +755,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/global-metrics/quotes/historical', params)
+          const data = await makeApiRequest(apiKey, '/v1/global-metrics/quotes/historical', params)
           return formatResponse(data)
         })
       }
@@ -763,7 +765,7 @@ const createServer = () => {
   /*
   * STARTUP SUBSCRIPTION ENDPOINTS
   */
-  if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Startup)) {
+  if (checkSubscriptionLevel(subscriptionLevel, SUBSCRIPTION_LEVELS.Startup)) {
     // /cryptocurrency/listings/new
     server.tool("newCryptocurrencyListings",
       "Returns a paginated list of most recently added cryptocurrencies.",
@@ -776,7 +778,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/listings/new', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/listings/new', params)
           return formatResponse(data)
         })
       }
@@ -790,7 +792,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/trending/gainers-losers', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/trending/gainers-losers', params)
           return formatResponse(data)
         })
       }
@@ -804,7 +806,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/trending/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/trending/latest', params)
           return formatResponse(data)
         })
       }
@@ -818,7 +820,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/cryptocurrency/trending/most-visited', params)
+          const data = await makeApiRequest(apiKey, '/v1/cryptocurrency/trending/most-visited', params)
           return formatResponse(data)
         })
       }
@@ -842,7 +844,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/ohlcv/historical', params)
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/ohlcv/historical', params)
           return formatResponse(data)
         })
       }
@@ -861,7 +863,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/ohlcv/latest', params)
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/ohlcv/latest', params)
           return formatResponse(data)
         })
       }
@@ -880,7 +882,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/price-performance-stats/latest', params)
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/price-performance-stats/latest', params)
           return formatResponse(data)
         })
       }
@@ -890,7 +892,7 @@ const createServer = () => {
   /*
   * STANDARD SUBSCRIPTION ENDPOINTS
   */
-  if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Standard)) {
+  if (checkSubscriptionLevel(subscriptionLevel, SUBSCRIPTION_LEVELS.Standard)) {
     // /cryptocurrency/market-pairs/latest
     server.tool("cryptoMarketPairsLatest",
       "Returns all market pairs for the specified cryptocurrency with associated stats.",
@@ -910,7 +912,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v2/cryptocurrency/market-pairs/latest', params)
+          const data = await makeApiRequest(apiKey, '/v2/cryptocurrency/market-pairs/latest', params)
           return formatResponse(data)
         })
       }
@@ -930,7 +932,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/listings/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/listings/latest', params)
           return formatResponse(data)
         })
       }
@@ -950,7 +952,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/market-pairs/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/market-pairs/latest', params)
           return formatResponse(data)
         })
       }
@@ -968,7 +970,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/exchange/quotes/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/exchange/quotes/latest', params)
           return formatResponse(data)
         })
       }
@@ -987,7 +989,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/content/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/content/latest', params)
           return formatResponse(data)
         })
       }
@@ -1002,7 +1004,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/content/posts/top', params)
+          const data = await makeApiRequest(apiKey, '/v1/content/posts/top', params)
           return formatResponse(data)
         })
       }
@@ -1017,7 +1019,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/content/posts/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/content/posts/latest', params)
           return formatResponse(data)
         })
       }
@@ -1033,7 +1035,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/content/posts/comments', params)
+          const data = await makeApiRequest(apiKey, '/v1/content/posts/comments', params)
           return formatResponse(data)
         })
       }
@@ -1048,7 +1050,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/community/trending/topic', params)
+          const data = await makeApiRequest(apiKey, '/v1/community/trending/topic', params)
           return formatResponse(data)
         })
       }
@@ -1063,7 +1065,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/community/trending/token', params)
+          const data = await makeApiRequest(apiKey, '/v1/community/trending/token', params)
           return formatResponse(data)
         })
       }
@@ -1073,7 +1075,7 @@ const createServer = () => {
   /*
   * ENTERPRISE SUBSCRIPTION ENDPOINTS
   */
-  if (checkSubscriptionLevel(SUBSCRIPTION_LEVELS.Enterprise)) {
+  if (checkSubscriptionLevel(subscriptionLevel, SUBSCRIPTION_LEVELS.Enterprise)) {
     // /blockchain/statistics/latest
     server.tool("blockchainStatisticsLatest",
       "Returns the latest statistics for one or more blockchains.",
@@ -1084,7 +1086,7 @@ const createServer = () => {
       },
       async (params) => {
         return handleEndpoint(async () => {
-          const data = await makeApiRequest('/v1/blockchain/statistics/latest', params)
+          const data = await makeApiRequest(apiKey, '/v1/blockchain/statistics/latest', params)
           return formatResponse(data)
         })
       }
@@ -1095,62 +1097,11 @@ const createServer = () => {
 }
 
 // Stdio Server 
-const stdioServer = createServer()
+const stdioServer = createServer({})
 const transport = new StdioServerTransport()
 await stdioServer.connect(transport)
 
 // Streamable HTTP Server
-const app = express()
-app.use(express.json())
-
-app.post('/mcp', async (req, res) => {
-  try {
-    const server = createServer()
-    const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined })
-
-    res.on('close', () => {
-      transport.close()
-      server.close()
-    })
-
-    await server.connect(transport)
-    await transport.handleRequest(req, res, req.body)
-  } catch (error) {
-    if (!res.headersSent) {
-      res.status(500).json({
-        jsonrpc: '2.0',
-        error: {
-          code: -32603,
-          message: 'Internal server error',
-        },
-        id: null
-      })
-    }
-  }
-})
-
-app.get('/mcp', async (req, res) => {
-  res.writeHead(405).end(JSON.stringify({
-    jsonrpc: "2.0",
-    error: {
-      code: -32000,
-      message: "Method not allowed."
-    },
-    id: null
-  }))
-})
-
-app.delete('/mcp', async (req, res) => {
-  res.writeHead(405).end(JSON.stringify({
-    jsonrpc: "2.0",
-    error: {
-      code: -32000,
-      message: "Method not allowed."
-    },
-    id: null
-  }))
-})
-
-// Start the server
+const { app } = createStatelessServer(createServer)
 const PORT = process.env.PORT || 3000
 app.listen(PORT)
