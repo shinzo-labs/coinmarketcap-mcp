@@ -1096,10 +1096,10 @@ function createServer({ config }) {
   return server
 }
 
-// // Stdio Server 
-// const stdioServer = createServer({})
-// const transport = new StdioServerTransport()
-// await stdioServer.connect(transport)
+// Stdio Server 
+const stdioServer = createServer({})
+const transport = new StdioServerTransport()
+await stdioServer.connect(transport)
 
 // Streamable HTTP Server
 const { app } = createStatelessServer(createServer)
