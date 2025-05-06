@@ -1152,5 +1152,5 @@ app.delete('/mcp', async (req, res) => {
 })
 
 // Start the server
-const STREAMABLE_HTTP_PORT = process.env.STREAMABLE_HTTP_PORT || 3000
-app.listen(STREAMABLE_HTTP_PORT)
+const PORT = process.env.PORT || 3000
+app.listen(PORT)

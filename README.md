@@ -90,7 +90,7 @@ pnpm i
 |-------------------------|-----------------------------------------------------------------------------|-----------|---------|
 | `COINMARKETCAP_API_KEY` | API Key from CoinMarketCap.com                                              | Yes       |         |
 | `SUBSCRIPTION_LEVEL`    | `Basic`, `Hobbyist`, `Startup`, `Standard`, `Professional`, or `Enterprise` | No        | `Basic` |
-| `STREAMABLE_HTTP_PORT`  | Port for Streamable HTTP transport method                                   | No        | `3000`  |
+| `PORT`                  | Port for Streamable HTTP transport method                                   | No        | `3000`  |
 
 ## Supported Tools
 
