@@ -16,17 +16,11 @@ startCommand:
         default: Basic
         description: "SUBSCRIPTION_LEVEL - One of: Basic, Hobbyist, Startup, Standard,
           Professional, or Enterprise (defaults to Basic)"
-  commandFunction:
-    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
-    |-
-    (config) => ({
-      command: 'node',
-      args: ['index.js'],
-      env: {
-        COINMARKETCAP_API_KEY: config.COINMARKETCAP_API_KEY,
-        SUBSCRIPTION_LEVEL: config.SUBSCRIPTION_LEVEL
-      }
-    })
+      PORT:
+        type: number
+        default: 3000
+        description: "PORT - The port to run the server on (defaults to 3000)"
   exampleConfig:
     COINMARKETCAP_API_KEY: test-key-123
     SUBSCRIPTION_LEVEL: Basic
+    PORT: 3000
