@@ -3,6 +3,8 @@
 [![npm version](https://badge.fury.io/js/@shinzolabs%2Fcoinmarketcap-mcp.svg)](https://badge.fury.io/js/@shinzolabs%2Fcoinmarketcap-mcp)
 [![smithery badge](https://smithery.ai/badge/@shinzo-labs/coinmarketcap-mcp)](https://smithery.ai/server/@shinzo-labs/coinmarketcap-mcp)
 
+<p align="center"><img height="512" src=https://github.com/user-attachments/assets/4b2d5f1c-2868-4b9b-8be3-b8ad02b4d331></p>
+
 A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) implementation for the [CoinMarketCap](https://coinmarketcap.com/) API, providing a standardized interface for accessing cryptocurrency market data, exchange information, and other blockchain-related metrics.
 
 ## Features
