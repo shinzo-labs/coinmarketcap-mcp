@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.3.3
+
+### Patch Changes
+
+- f4046d2: Make npm-publish.sh executable
+
 ## 1.3.2
 
 ### Patch Changes
