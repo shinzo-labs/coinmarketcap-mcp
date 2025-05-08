@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Check for changeset
-        run: npx changeset status --since=origin/main
+        run: npx @changesets/cli status --since=origin/main
 
   validate-versions:
     name: Validate versions
