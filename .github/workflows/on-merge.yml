@@ -3,7 +3,7 @@ name: Deployment
 on:
   push:
     branches:
-      - main
+      - fix/test-release-prs
 
 concurrency:
   group: deployment
