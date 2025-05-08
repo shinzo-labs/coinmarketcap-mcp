@@ -11,10 +11,5 @@ else
   git config --global user.name "github-actions[bot]"
   git add $PATH_TO_FILE
   git commit -m "Update MCP version to $version"
-  branch="${GITHUB_REF_NAME:-main}"
-  if [[ "$branch" =~ ^[a-zA-Z0-9._/-]+$ ]] && [[ ! "$branch" =~ /merge$ ]] && [[ ! "$branch" =~ ^pull/ ]]; then
-    git push origin HEAD:refs/heads/$branch
-  else
-    echo "Not on a real branch (branch=$branch), skipping push."
-  fi
+  git push origin HEAD:refs/heads/$GITHUB_REF_NAME
 fi
