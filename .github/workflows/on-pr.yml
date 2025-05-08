@@ -30,14 +30,25 @@ jobs:
       - name: Check for changeset
         run: npx @changesets/cli status --since=origin/main
 
-  validate-versions:
-    name: Validate versions
+  validate-package-version:
+    name: Validate package version
     runs-on: ['ubuntu-latest']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run validation script
-        run: .github/scripts/validate-versions.sh
+        run: .github/scripts/validate-package-version.sh
+  
+  update-mcp-version:
+    name: Update MCP version
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run validation script
+        run: .github/scripts/update-mcp-version.sh
+        env:
+          PATH_TO_FILE: 'index.js'
 
   validate-build:
     name: Validate build
