@@ -39,10 +39,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install pnpm
-        run: npm install -g pnpm
       - name: Install @changesets/cli
-        run: pnpm add -g @changesets/cli
+        run: npm install -g @changesets/cli
       - name: Create or update Release PR
         uses: changesets/action@v1
         with:
