@@ -1,0 +1,34 @@
+name: On Push to Changeset Release Branch
+
+on:
+  push:
+    branches:
+      - changeset-release/main
+
+env:
+  UPSTREAM_BRANCH: origin/${{ github.base_ref }}
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}-checks
+  cancel-in-progress: true
+
+jobs:
+  validate-version-increment:
+    name: Validate the version has incremented
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run validation script
+        run: .github/scripts/validate-version-increment.sh
+
+  update-mcp-version:
+    name: Update MCP version
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run validation script
+        run: .github/scripts/update-mcp-version.sh
+        env:
+          PATH_TO_FILE: 'index.js'

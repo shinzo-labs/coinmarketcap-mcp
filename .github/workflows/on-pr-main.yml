@@ -1,9 +1,9 @@
-name: PR Checks
+name: On PR against Main Branch
 
 on:
   pull_request:
-    branches:
-      - main
+    branches-ignore:
+      - changeset-release/main
 
 env:
   UPSTREAM_BRANCH: origin/${{ github.base_ref }}
@@ -30,14 +30,16 @@ jobs:
       - name: Check for changeset
         run: npx @changesets/cli status --since=origin/main
 
-  validate-versions:
-    name: Validate versions
+  validate-no-version-change:
+    name: Validate the version has not changed
     runs-on: ['ubuntu-latest']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run validation script
-        run: .github/scripts/validate-versions.sh
+        run: .github/scripts/validate-no-version-change.sh
+        env:
+          FILE_PATH: index.js
 
   validate-build:
     name: Validate build
