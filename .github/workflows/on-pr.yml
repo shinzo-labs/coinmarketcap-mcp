@@ -5,11 +5,27 @@ on:
     branches:
       - main
 
+env:
+  UPSTREAM_BRANCH: origin/${{ github.base_ref }}
+
 concurrency:
   group: pr-${{ github.event.pull_request.number }}-checks
   cancel-in-progress: true
 
 jobs:
+  check-changeset:
+    name: Check for changeset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check for changeset
+        run: npx changeset status --since=origin/main
+
   validate-versions:
     name: Validate versions
     runs-on: ['ubuntu-latest']
