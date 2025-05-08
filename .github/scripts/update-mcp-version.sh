@@ -11,5 +11,8 @@ else
   git config --global user.name "github-actions[bot]"
   git add $PATH_TO_FILE
   git commit -m "Update MCP version to $version"
-  git push origin HEAD:refs/heads/$GITHUB_HEAD_REF
+  branch=$GITHUB_HEAD_REF
+  git fetch origin $branch
+  git pull --rebase origin $branch
+  git push origin HEAD:refs/heads/$branch
 fi
