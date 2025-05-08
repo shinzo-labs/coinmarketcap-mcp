@@ -10,13 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install-pnpm:
-    name: Install pnpm
-    runs-on: ['ubuntu-latest']
-    steps:
-      - name: Install pnpm
-        run: npm install -g pnpm
-
   validate-versions:
     name: Validate versions
     runs-on: ['ubuntu-latest']
@@ -32,5 +25,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Run validation script
         run: .github/scripts/validate-build.sh
