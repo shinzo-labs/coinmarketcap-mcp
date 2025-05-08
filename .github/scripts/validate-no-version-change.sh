@@ -6,24 +6,25 @@ git fetch origin $BASE_BRANCH
 pkg_version=$(jq -r .version package.json)
 base_version=$(git show origin/$BASE_BRANCH:package.json | jq -r .version)
 
-IFS='.' read -r pkg_major pkg_minor pkg_patch <<< "$pkg_version"
-IFS='.' read -r base_major base_minor base_patch <<< "$base_version"
-
-inc_count=0
-
-if [ "$pkg_major" -eq $((base_major + 1)) ] && [ "$pkg_minor" -eq 0 ] && [ "$pkg_patch" -eq 0 ]; then
-  inc_count=1
-elif [ "$pkg_major" -eq "$base_major" ] && [ "$pkg_minor" -eq $((base_minor + 1)) ] && [ "$pkg_patch" -eq 0 ]; then
-  inc_count=1
-elif [ "$pkg_major" -eq "$base_major" ] && [ "$pkg_minor" -eq "$base_minor" ] && [ "$pkg_patch" -eq $((base_patch + 1)) ]; then
-  inc_count=1
-fi
-
-if [ "$inc_count" -ne 0 ] && [ "$inc_count" -ne 1 ]; then
-  echo "Error: Version must increment at most one of major, minor, or patch by 1 (and reset lower segments if major/minor is incremented)."
+# Check if version has changed from base branch
+if [ "$pkg_version" != "$base_version" ]; then
+  echo "Error: Version should not change from base branch."
   echo "Base branch version: $base_version"
   echo "PR version: $pkg_version"
   exit 1
 fi
 
-echo "inc_count=$inc_count"
+# Check if package version matches the version in FILE_PATH
+if [ -n "$FILE_PATH" ] && [ -f "$FILE_PATH" ]; then
+  file_content=$(cat "$FILE_PATH")
+  file_version=$(echo "$file_content" | grep -o 'version: "[0-9]\+\.[0-9]\+\.[0-9]\+"' | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+')
+  
+  if [ "$pkg_version" != "$file_version" ]; then
+    echo "Error: Version in package.json ($pkg_version) does not match version in $FILE_PATH ($file_version)"
+    exit 1
+  fi
+else
+  echo "Warning: FILE_PATH not set or file does not exist. Skipping file version check."
+fi
+
+echo "Version validation passed: $pkg_version"
