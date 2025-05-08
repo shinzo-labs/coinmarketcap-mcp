@@ -1,7 +1,7 @@
-name: On Push to Changeset Release Branch
+name: On PR for Changeset Release Branch
 
 on:
-  push:
+  pull_request:
     branches:
       - changeset-release/main
 
