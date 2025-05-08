@@ -3,7 +3,7 @@ name: On Push to Main Branch
 on:
   push:
     branches:
-      - fix/mcp-version-update-2
+      - main
 
 concurrency:
   group: deployment
