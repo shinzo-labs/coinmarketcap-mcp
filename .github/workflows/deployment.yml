@@ -1,0 +1,22 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deployment
+  cancel-in-progress: true
+
+jobs:
+  npm-publish:
+    name: Publish to npmjs.com
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Publish to npmjs.com
+        run: .github/scripts/npm-publish.sh
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
