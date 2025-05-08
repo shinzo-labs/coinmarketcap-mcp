@@ -49,6 +49,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  update-mcp-version:
+    name: Update MCP version
+    runs-on: ['ubuntu-latest']
+    needs: [check-version, create-release-pr]
+    if: needs.check-version.outputs.version_changed == 'false'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run validation script
+        with:
+          fetch-depth: 0
+        run: .github/scripts/update-mcp-version.sh
+        env:
+          PATH_TO_FILE: 'index.js'
+
   gh-release:
     name: GH Release
     runs-on: ubuntu-latest
