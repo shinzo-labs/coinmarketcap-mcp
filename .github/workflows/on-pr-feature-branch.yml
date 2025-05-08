@@ -1,4 +1,4 @@
-name: On PR against Main Branch
+name: On PR for Feature Branch
 
 on:
   pull_request:
