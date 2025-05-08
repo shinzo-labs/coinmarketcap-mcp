@@ -1,0 +1,31 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency: # Useful for running multiple workflows in parallel
+  group: pr-${{ github.event.pull_request.number }}-checks
+  cancel-in-progress: true
+
+jobs:
+  validate-versions:
+    name: Validate versions
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run validation script
+        run: .github/scripts/validate-versions.sh
+        working-directory: coinmarketcap-mcp
+
+  validate-build:
+    name: Validate build
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run validation script
+        run: .github/scripts/validate-build.sh
+        working-directory: coinmarketcap-mcp
