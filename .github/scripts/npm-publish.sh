@@ -2,4 +2,4 @@
 
 npm install -g pnpm
 pnpm install --frozen-lockfile
-npm publish --access public
+npm publish --provenance --access public

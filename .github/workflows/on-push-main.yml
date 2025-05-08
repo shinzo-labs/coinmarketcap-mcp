@@ -88,14 +88,19 @@ jobs:
           body_path: pr_body.tmp
 
   npm-publish:
-    name: Publish to npmjs.com
+    name: Publish to npm registry
     runs-on: ubuntu-latest
     needs: check-version
     if: needs.check-version.outputs.version_changed == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Publish to npmjs.com
+      - name: Setup Node.js and npm auth
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Publish
         run: .github/scripts/npm-publish.sh
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
