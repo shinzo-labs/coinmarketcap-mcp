@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.3.2
+
+### Patch Changes
+
+- 76a5912: Update NPM publish script
+
 ## 1.3.1
 
 ### Patch Changes
