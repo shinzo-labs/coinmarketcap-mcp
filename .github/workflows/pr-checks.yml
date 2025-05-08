@@ -10,6 +10,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  install-pnpm:
+    name: Install pnpm
+    runs-on: ['ubuntu-latest']
+    steps:
+      - name: Install pnpm
+        run: npm install -g pnpm
+
   validate-versions:
     name: Validate versions
     runs-on: ['ubuntu-latest']
