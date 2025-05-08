@@ -58,8 +58,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run validation script
-        with:
-          fetch-depth: 0
         run: .github/scripts/update-mcp-version.sh
         env:
           PATH_TO_FILE: 'index.js'
