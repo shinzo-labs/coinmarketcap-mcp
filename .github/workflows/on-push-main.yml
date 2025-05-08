@@ -1,4 +1,4 @@
-name: Deployment
+name: On Push to Main Branch
 
 on:
   push:
@@ -18,13 +18,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Fetch main branch
-        run: git fetch origin main:refs/remotes/origin/main
       - name: Check if version changed
         id: version-check
         run: |
           current_version=$(jq -r .version package.json)
-          base_version=$(git show origin/main:package.json | jq -r .version)
+          base_version=$(git show HEAD^:package.json | jq -r .version)
           if [ "$current_version" != "$base_version" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
