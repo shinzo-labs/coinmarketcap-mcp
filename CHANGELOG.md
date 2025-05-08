@@ -1,0 +1,11 @@
+# @shinzolabs/coinmarketcap-mcp
+
+## 1.3.1
+
+### Patch Changes
+
+- 39d5c10: Add @changesets/cli as dev dep for Release PR creation
+- 14a8d0d: Debug release workflow
+- 815f99e: Patch create-release-pr
+- 2eee98f: Add github workflows for checks and publishing
+- 86e6d2f: Ensure MCP version can be updated in same release PRs
