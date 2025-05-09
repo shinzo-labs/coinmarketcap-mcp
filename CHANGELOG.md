@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.3.6
+
+### Patch Changes
+
+- c11e225: Publish NPM package with pnpm
+
 ## 1.3.5
 
 ### Patch Changes
