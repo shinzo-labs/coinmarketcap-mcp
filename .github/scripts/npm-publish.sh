@@ -1,5 +1,4 @@
 #!/bin/sh
 
-npm install -g pnpm
-pnpm install --frozen-lockfile
+npm ci
 npm publish --provenance --access public
