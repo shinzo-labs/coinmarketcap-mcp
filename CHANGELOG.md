@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.3.4
+
+### Patch Changes
+
+- b09d521: Use 'npm ci' for npm publish script
+
 ## 1.3.3
 
 ### Patch Changes
