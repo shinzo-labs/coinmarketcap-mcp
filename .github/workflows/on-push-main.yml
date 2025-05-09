@@ -102,15 +102,3 @@ jobs:
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  # deploy-to-smithery: # TODO: Implement this when the Smithery API supports this
-  #   name: Deploy to Smithery
-  #   runs-on: ubuntu-latest
-  #   needs: npm-publish
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Deploy to Smithery
-  #       run: .github/scripts/deploy-to-smithery.sh
-  #       env:
-  #         SMITHERY_API_KEY: ${{ secrets.SMITHERY_API_KEY }}
