@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.3.5
+
+### Patch Changes
+
+- 582e015: Add correct permissions for NPM token
+
 ## 1.3.4
 
 ### Patch Changes
