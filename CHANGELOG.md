@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.3.7
+
+### Patch Changes
+
+- e01aed7: Update gh workflows to manage release PRs better
+
 ## 1.3.6
 
 ### Patch Changes
