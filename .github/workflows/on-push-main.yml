@@ -12,6 +12,7 @@ concurrency:
 jobs:
   check-version:
     runs-on: ubuntu-latest
+    needs: check-changesets
     outputs:
       version_changed: ${{ steps.version-check.outputs.changed }}
     steps:
@@ -29,11 +30,28 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
+  check-changesets:
+    runs-on: ubuntu-latest
+    outputs:
+      hasChangesets: ${{ steps.changeset-check.outputs.hasChangesets }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check for changesets
+        id: changeset-check
+        run: |
+          if [ -n "$(ls .changeset/*.md 2>/dev/null | grep -v 'README.md' | grep -v 'config.json')" ]; then
+            echo "hasChangesets=true" >> $GITHUB_OUTPUT
+          else
+            echo "hasChangesets=false" >> $GITHUB_OUTPUT
+          fi
+
   create-release-pr:
     name: Create or update Release PR
     runs-on: ubuntu-latest
-    needs: check-version
-    if: needs.check-version.outputs.version_changed == 'false'
+    needs: [check-version, check-changesets]
+    if: needs.check-changesets.outputs.hasChangesets == 'true' && needs.check-version.outputs.version_changed == 'false'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
