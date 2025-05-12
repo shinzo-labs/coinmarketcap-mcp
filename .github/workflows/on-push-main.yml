@@ -59,11 +59,17 @@ jobs:
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Get next version from changesets
+        id: get-next-version
+        run: |
+          npx changeset status --output changeset-status.json
+          version=$(jq -r '.releases[0].newVersion' changeset-status.json)
+          echo "next_version=$version" >> $GITHUB_OUTPUT
       - name: Create or update Release PR
         uses: changesets/action@v1
         with:
           publish: false
-          title: "Changeset Release"
+          title: "Release v${{ steps.get-next-version.outputs.next_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update MCP version
