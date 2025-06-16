@@ -96,7 +96,7 @@ function getConfig(config) {
 function createServer({ config }) {
   const server = new McpServer({
     name: "CoinMarketCap-MCP",
-    version: "1.3.7",
+    version: "1.4.0",
     description: "A complete MCP for the CoinMarketCap API"
   })
 
