@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.4.0
+
+### Minor Changes
+
+- 4bf1fa5: Update and pin dependencies
+
 ## 1.3.7
 
 ### Patch Changes

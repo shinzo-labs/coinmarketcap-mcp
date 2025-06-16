@@ -1,0 +1,25 @@
+{
+  "changesets": [
+    {
+      "releases": [
+        {
+          "name": "@shinzolabs/coinmarketcap-mcp",
+          "type": "minor"
+        }
+      ],
+      "summary": "Update and pin dependencies",
+      "id": "five-planets-do"
+    }
+  ],
+  "releases": [
+    {
+      "name": "@shinzolabs/coinmarketcap-mcp",
+      "type": "minor",
+      "oldVersion": "1.3.7",
+      "changesets": [
+        "five-planets-do"
+      ],
+      "newVersion": "1.4.0"
+    }
+  ]
+}
