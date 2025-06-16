@@ -2,7 +2,7 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
-import { createStatelessServer } from "@smithery/sdk/server/stateless.js"
+import { createStatefulServer } from "@smithery/sdk/server/stateful.js"
 import { z } from "zod"
 
 // Subscription plan levels in order of increasing access
@@ -1102,6 +1102,6 @@ const transport = new StdioServerTransport()
 await stdioServer.connect(transport)
 
 // Streamable HTTP Server
-const { app } = createStatelessServer(createServer)
+const { app } = createStatefulServer(createServer)
 const PORT = process.env.PORT || 3000
 app.listen(PORT)
