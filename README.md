@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/shinzo-labs-coinmarketcap-mcp-badge.png)](https://mseep.ai/app/shinzo-labs-coinmarketcap-mcp)
+
 # CoinMarketCap MCP
 
 [![npm version](https://badge.fury.io/js/@shinzolabs%2Fcoinmarketcap-mcp.svg)](https://badge.fury.io/js/@shinzolabs%2Fcoinmarketcap-mcp)
