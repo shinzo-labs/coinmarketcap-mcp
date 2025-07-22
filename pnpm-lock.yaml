@@ -11,9 +11,6 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: 1.16.0
         version: 1.16.0
-      '@opentelemetry/api':
-        specifier: ^1.9.0
-        version: 1.9.0
       '@shinzolabs/instrumentation-mcp':
         specifier: ^1.0.7
         version: 1.0.7(@modelcontextprotocol/sdk@1.16.0)
