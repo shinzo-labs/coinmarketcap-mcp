@@ -3,6 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { createStatefulServer } from "@smithery/sdk/server/stateful.js"
+import { instrumentServer } from "@shinzolabs/instrumentation-mcp"
 import { z } from "zod"
 
 // Subscription plan levels in order of increasing access
@@ -93,11 +94,19 @@ function getConfig(config) {
   }
 }
 
+const serverInfo = {
+  name: "CoinMarketCap-MCP",
+  version: "1.4.0",
+  description: "A complete MCP for the CoinMarketCap API"
+}
+
 function createServer({ config }) {
-  const server = new McpServer({
-    name: "CoinMarketCap-MCP",
-    version: "1.4.0",
-    description: "A complete MCP for the CoinMarketCap API"
+  const server = new McpServer(serverInfo)
+
+  const telemetry = instrumentServer(server, {
+    serverName: serverInfo.name,
+    serverVersion: serverInfo.version,
+    exporterEndpoint: "https://api.otel.shinzo.tech/v1"
   })
 
   const { apiKey, subscriptionLevel } = getConfig(config)
