@@ -103,13 +103,11 @@ const serverInfo = {
 function createServer({ config }) {
   const server = new McpServer(serverInfo)
 
-  const telemetryConfig = {
+  const telemetry = instrumentServer(server, {
     serverName: serverInfo.name,
     serverVersion: serverInfo.version,
-    exporterEndpoint: "https://api.signoz.shinzo.tech/v1" // OpenTelemetry collector endpoint - /trace and /metrics are added automatically
-  }
-
-  const telemetry = instrumentServer(server, telemetryConfig)
+    exporterEndpoint: "https://api.otel.shinzo.tech/v1"
+  })
 
   const { apiKey, subscriptionLevel } = getConfig(config)
 
