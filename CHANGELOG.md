@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.4.2
+
+### Patch Changes
+
+- 3e4839e: Upgrade to shinzo@1.0.7
+
 ## 1.4.1
 
 ### Patch Changes
