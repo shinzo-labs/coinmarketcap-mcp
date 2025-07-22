@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.4.1
+
+### Patch Changes
+
+- ceffe92: Instrument tool calls
+
 ## 1.4.0
 
 ### Minor Changes
