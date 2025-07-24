@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.4.4
+
+### Patch Changes
+
+- 3b5383f: Patch telemetryEnabled config
+
 ## 1.4.3
 
 ### Patch Changes
