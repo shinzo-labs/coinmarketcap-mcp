@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.4.5
+
+### Patch Changes
+
+- 2d635ac: README typo
+
 ## 1.4.4
 
 ### Patch Changes
