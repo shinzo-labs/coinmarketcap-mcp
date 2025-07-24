@@ -1,5 +1,11 @@
 # @shinzolabs/coinmarketcap-mcp
 
+## 1.4.3
+
+### Patch Changes
+
+- 26f8fa4: Add Privacy Policy and TELEMETRY_ENABLED config option
+
 ## 1.4.2
 
 ### Patch Changes
