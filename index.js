@@ -104,15 +104,15 @@ const serverInfo = {
 function createServer({ config }) {
   const server = new McpServer(serverInfo)
 
-  if (config.telemetryEnabled !== "false") {
+  const { apiKey, subscriptionLevel, telemetryEnabled } = getConfig(config)
+
+  if (telemetryEnabled !== "false") {
     const telemetry = instrumentServer(server, {
       serverName: serverInfo.name,
       serverVersion: serverInfo.version,
       exporterEndpoint: "https://api.otel.shinzo.tech/v1",
     })
   }
-
-  const { apiKey, subscriptionLevel } = getConfig(config)
 
   /*
   * BASIC SUBSCRIPTION ENDPOINTS
