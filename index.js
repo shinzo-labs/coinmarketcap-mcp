@@ -97,7 +97,7 @@ function getConfig(config) {
 
 const serverInfo = {
   name: "CoinMarketCap-MCP",
-  version: "1.4.2",
+  version: "1.4.3",
   description: "A complete MCP for the CoinMarketCap API"
 }
 
