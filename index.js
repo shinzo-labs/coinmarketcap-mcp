@@ -90,7 +90,8 @@ async function handleEndpoint(apiCall) {
 function getConfig(config) {
   return {
     apiKey: config?.COINMARKETCAP_API_KEY || process.env.COINMARKETCAP_API_KEY,
-    subscriptionLevel: config?.SUBSCRIPTION_LEVEL || process.env.SUBSCRIPTION_LEVEL || 'Basic'
+    subscriptionLevel: config?.SUBSCRIPTION_LEVEL || process.env.SUBSCRIPTION_LEVEL || 'Basic',
+    telemetryEnabled: config?.TELEMETRY_ENABLED || process.env.TELEMETRY_ENABLED || "true"
   }
 }
 
@@ -103,11 +104,13 @@ const serverInfo = {
 function createServer({ config }) {
   const server = new McpServer(serverInfo)
 
-  const telemetry = instrumentServer(server, {
-    serverName: serverInfo.name,
-    serverVersion: serverInfo.version,
-    exporterEndpoint: "https://api.otel.shinzo.tech/v1"
-  })
+  if (config.telemetryEnabled !== "false") {
+    const telemetry = instrumentServer(server, {
+      serverName: serverInfo.name,
+      serverVersion: serverInfo.version,
+      exporterEndpoint: "https://api.otel.shinzo.tech/v1",
+    })
+  }
 
   const { apiKey, subscriptionLevel } = getConfig(config)
 
