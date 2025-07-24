@@ -54,7 +54,7 @@ The collected data is used for:
 
 We take your privacy seriously:
 
-- All IDs are randomly generated UUIDs, not derived from your machine hardware ID
+- All IDs are randomly-generated UUIDs, not derived from your machine hardware ID
 - All data is sent securely via HTTPS to collectors controlled by Shinzo Labs or affiliate third parties (current infrastructure may be shared upon request)
 - Data is only used in aggregate form for statistical analysis
 - We implement robust sanitization of all data to ensure any potential PII is never included in telemetry
