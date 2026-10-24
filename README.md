@@ -4,7 +4,7 @@
         <a href="https://badge.fury.io/js/@shinzolabs%2Fcoinmarketcap-mcp"><img src="https://badge.fury.io/js/@shinzolabs%2Fcoinmarketcap-mcp.svg" alt="NPM Version"></a>
         <a href="https://github.com/shinzo-labs/coinmarketcap-mcp/stargazers"><img src="https://img.shields.io/github/stars/shinzo-labs/coinmarketcap-mcp?style=flat&logo=github&color=e3b341" alt="Stars"></a>
         <a href="https://github.com/shinzo-labs/coinmarketcap-mcp/forks"><img src="https://img.shields.io/github/forks/shinzo-labs/coinmarketcap-mcp?style=flat&logo=github&color=8957e5" alt="Forks"></a>
-        <a href="https://smithery.ai/server/@shinzo-labs/coinmarketcap-mcp"><img src="https://smithery.ai/badge/@shinzo-labs/coinmarketcap-mcp" alt="Smithery Calls"></a>
+        <a href="https://lightnow.ai/servers/io.github.shinzo-labs/coinmarketcap-mcp"><img src="https://lightnow.ai/badge/io.github.shinzo-labs/coinmarketcap-mcp" alt="LightNow capabilities"></a>
         <a href="https://www.npmjs.com/package/@shinzolabs/coinmarketcap-mcp"><img src="https://img.shields.io/npm/dm/%40shinzolabs%2Fcoinmarketcap-mcp" alt="NPM Downloads"></a>
 </div>
 
